@@ -25,8 +25,8 @@ Please download following datasets to `data`.
 
 
 ## Citation
-@inproceedings{reed2022self,  
-  title={Self-supervised pretraining improves self-supervised pretraining},  
+@inproceedings{miyai2023pnda,  
+  title={Rethinking Rotation in Self-Supervised Contrastive Learning: Adaptive Positive or Negative Data Augmentation},  
   author={Miyai, Atsuyuki and Yu, Qing and Ikami, Daiki and Irie, Go and Aizawa Kiyoharu},  
   booktitle={Proceedings of the IEEE/CVF Winter Conference on Applications of Computer Vision},  
   year={2023}  
