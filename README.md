@@ -17,8 +17,9 @@ The codes and their details for each step are stored in a sub-directory with the
 The RAI sampling results used in the experiment are stored in `RAI_results`.
 Therefore, you can start from either step.
 
-## Datasets 
-Please make `data` folder here. 
+## Preparation
+Download out-of-distributin datasets from Dropbox. 
+Please make `data` folder. 
 Please download following datasets to `data`.
 * [CIFAR100](https://drive.google.com/file/d/1FRi1K1ZQ-OCgIhMROwjYAt_m_K44Q9ea/view?usp=sharing)
 * [Tiny ImageNet](https://drive.google.com/file/d/1b846FVuOPpZbOnKaiFd2OL4MZntbiiPr/view?usp=sharing)
