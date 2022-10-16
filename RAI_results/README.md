@@ -6,7 +6,7 @@ These .pkl files consist of the values 0 or 1.
 RAI (rotation positive): 1  
 not-RAI (rotation negative): 0
 
-The index of each .pkl corresponds to the index of each dataset.  
+The index of each .pkl corresponds to the index of the sample in each dataset.  
 
 ## Creation
 Please refer to `RAI_SAMPLING/inference.py`.
