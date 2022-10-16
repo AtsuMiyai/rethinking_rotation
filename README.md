@@ -22,3 +22,12 @@ Please make `data` folder here.
 Please download following datasets to `data`.
 * [CIFAR100](https://drive.google.com/file/d/1FRi1K1ZQ-OCgIhMROwjYAt_m_K44Q9ea/view?usp=sharing)
 * [Tiny ImageNet](https://drive.google.com/file/d/1b846FVuOPpZbOnKaiFd2OL4MZntbiiPr/view?usp=sharing)
+
+
+## Citation
+@inproceedings{reed2022self,
+  title={Self-supervised pretraining improves self-supervised pretraining},
+  author={Miyai, Atsuyuki and Yu, Qing and Ikami, Daiki and Irie, Go and Aizawa Kiyoharu},
+  booktitle={Proceedings of the IEEE/CVF Winter Conference on Applications of Computer Vision},
+  year={2023}
+}
