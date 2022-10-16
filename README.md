@@ -25,9 +25,9 @@ Please download following datasets to `data`.
 
 
 ## Citation
-@inproceedings{reed2022self,
-  title={Self-supervised pretraining improves self-supervised pretraining},
-  author={Miyai, Atsuyuki and Yu, Qing and Ikami, Daiki and Irie, Go and Aizawa Kiyoharu},
-  booktitle={Proceedings of the IEEE/CVF Winter Conference on Applications of Computer Vision},
-  year={2023}
+@inproceedings{reed2022self,  
+  title={Self-supervised pretraining improves self-supervised pretraining},  
+  author={Miyai, Atsuyuki and Yu, Qing and Ikami, Daiki and Irie, Go and Aizawa Kiyoharu},  
+  booktitle={Proceedings of the IEEE/CVF Winter Conference on Applications of Computer Vision},  
+  year={2023}  
 }
