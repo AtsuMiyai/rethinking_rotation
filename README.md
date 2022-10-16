@@ -1,6 +1,11 @@
 # Rethinking Rotation in Self-Supervised Contrastive Learning: Adaptive Positive or Negative Data Augmentation
 
-This is the PyTorch impelementation of our paper.
+
+This is the PyTorch impelementation of our paper "Rethinking Rotation in Self-Supervised Contrastive Learning: Adaptive Positive or Negative Data Augmentation" [Miyai+, WACV2023].
+
+<p align="center">
+    <img src=figure/overview_pnda.png width="900"> 
+</p>
 
 Our method comprises two major steps:
 
