@@ -1,6 +1,6 @@
 # Rethinking Rotation in Self-Supervised Contrastive Learning: Adaptive Positive or Negative Data Augmentation
 <p align="center">
-    <img src=../figure/rai_sampling.jpg width="900"> 
+    <img src=../figure/rai_sampling.png width="900"> 
 </p>
 
 ## 1. Requirements
