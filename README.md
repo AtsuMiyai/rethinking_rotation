@@ -1,7 +1,7 @@
 # Rethinking Rotation in Self-Supervised Contrastive Learning: Adaptive Positive or Negative Data Augmentation
 
 
-This is the official PyTorch impelementation of our paper "Rethinking Rotation in Self-Supervised Contrastive Learning: Adaptive Positive or Negative Data Augmentation" [Miyai+, WACV2023].  
+This is the official PyTorch impelementation of our paper "[Rethinking Rotation in Self-Supervised Contrastive Learning: Adaptive Positive or Negative Data Augmentation](https://arxiv.org/abs/2210.12681)" [Miyai+, WACV2023].  
 
 We propose a novel augmentation strategy for self-supervised contrastive learning, **adaptive Positive or Negative Data Augmentation (PNDA)**, 
 in which an original and its rotated image are a positive pair if they are semantically close and a negative pair if they are semantically different. To achieve PNDA, we first determine whether rotation is positive or negative on an image-by-image basis in an unsupervised way (RAI sampling). Then, we apply PNDA to contrastive learning frameworks. Our experiments showed that PNDA improves the performance of contrastive learning. 
