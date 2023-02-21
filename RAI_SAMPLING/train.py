@@ -110,13 +110,13 @@ logger.log(model)
 
 for epoch in range(start_epoch, P.epochs + 1):
     logger.log_dirname(f"Epoch {epoch}")
-    model.train()
-    model.eval()
+    
     train(P, epoch, model, criterion, optimizer,
           scheduler, train_loader, logger=logger)
 
     # overfit_check
     if epoch == P.beta_1:
+        model.eval()
         rot_acc = test_classifier(P, model=model,  test_loader=infer_loader)
         logger.log('[rot_acc %.3f]' % (rot_acc))
         assert rot_acc < P.beta_1_overacc, "It is likely that this model are overfitting, please try again."

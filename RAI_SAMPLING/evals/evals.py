@@ -40,13 +40,13 @@ def calculate_score(P, model, test_loader):
             batch_ent_list = []
             images_rot = torch.cat([torch.rot90(images, rot, [2, 3]) for rot in range(4)]) 
             output = model(images_rot)
-            for j in range(4):
+            for rot_label in range(4):
                 instance_ent_list = []
-                for num in range(batch_size):
-                    prob = softmax(output[j*batch_size + num])
-                    prob = prob.detach().cpu()
-                    output_entropy = entropy(prob)
-                    instance_ent_list.append(output_entropy.item())
+                for num in range(batch_size): # calculate the entropy per sample.
+                    instance_prob = softmax(output[rot_label*batch_size + num])
+                    instance_prob = instance_prob.detach().cpu()
+                    instance_entropy = entropy(instance_prob)
+                    instance_ent_list.append(instance_entropy.item())
                 batch_ent_list.append(instance_ent_list)  # 4*batch_size
             batch_score_list = np.mean(batch_ent_list, axis=0)  # batch_size          
             score_list.extend(batch_score_list)
