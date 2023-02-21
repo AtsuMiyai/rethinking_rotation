@@ -28,7 +28,7 @@ def test_classifier(P, model, test_loader):
 
 
 def calculate_score(P, model, test_loader):
-    model.eval()
+    
     model.eval()
     score_list = []
 
