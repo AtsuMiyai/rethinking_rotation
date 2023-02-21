@@ -54,8 +54,10 @@ def train(P, epoch, model, criterion, optimizer, scheduler, loader, logger=None)
     # losses['ratio'] = AverageMeter()
 
     check = time.time()
+    model.train()
+    
     for n, (images, labels) in enumerate(loader):
-        model.train()
+    
         count = n * P.n_gpus  # number of trained samples
 
         data_time.update(time.time() - check)
