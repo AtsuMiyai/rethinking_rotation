@@ -21,8 +21,25 @@ parser.add_argument('--dataset', help='Dataset',
                     choices=['cifar100', 'tiny_imagenet'], type=str)
 parser.add_argument('--model', help='Model',
                     choices=['resnet18', 'resnet18_imagenet'], type=str)
+parser.add_argument('--batch_size', help='Batch size',
+                    default=64, type=int)
+parser.add_argument('--optimizer', help='Optimizer',
+                    choices=['sgd', 'adam'],
+                    default='lars', type=str)
+parser.add_argument('--lr_init', help='Initial learning rate',
+                    default=1e-1, type=float)
+parser.add_argument('--weight_decay', help='Weight decay',
+                    default=1e-6, type=float)
+parser.add_argument('--epochs_beta_1', help='Epochs for step1',
+                    default=10, type=int)
+parser.add_argument('--epochs_beta_2', help='Epochs for step2',
+                    default=200, type=int)
+parser.add_argument('--lambda_', help='lambda for entropy seperation loss',
+                    default=0.20, type=float)
+parser.add_argument('--beta_1_overacc', help='the overtrained accuracy at the step1',
+                    default=90, type=float)
 parser.add_argument('--resume_path', help='Path to the resume checkpoint',
-                        default=None, type=str)
+                    default=None, type=str)
 parser.add_argument('--suffix', help='Suffix for the log dir',
                     default=None, type=str)
 parser.add_argument('--save_step', help='Epoch steps to save models',
@@ -41,40 +58,16 @@ device = torch.device(f"cuda" if torch.cuda.is_available() else "cpu")
 
 P.n_gpus = torch.cuda.device_count()
 P.S_size = 4  # {0, 90, 180, 270}
+P.epochs = P.epochs_beta_1 + P.epochs_beta_2
 
 model = C.get_classifier(
     P.model, n_classes=P.S_size).to(device)
 
-### Set hyperparameters ###
-if P.dataset == 'cifar100':
-    assert P.model == 'resnet18'
-    P.batch_size = 64
-    P.optimizer = 'adam'
-    P.lr_init = 1e-3
-    P.weight_decay = 1e-6
+if P.optimizer == 'adam':
     optimizer = optim.Adam(model.parameters(), lr=P.lr_init, betas=(.9, .999), weight_decay=P.weight_decay) 
-    P.beta_1 = 10  # epochs for step1
-    P.beta_2 = 200  # epochs for step2
-    P.epochs = 210  # epochs for step1+step2
-    P.lambda_ = 0.20
-    P.margin = 0.20
-    P.beta_1 = 10
-    P.beta_1_overacc = 90
-elif P.dataset == 'tiny_imagenet':
-    assert P.model == 'resnet18_imagenet'
-    P.batch_size = 64
-    P.optimizer = 'sgd'
-    P.lr_init = 1e-1
-    P.weight_decay = 1e-6
+elif P.optimizer == 'sgd':
     optimizer = optim.SGD(model.parameters(), lr=P.lr_init, momentum=0.9, weight_decay=P.weight_decay)
-    P.beta_1 = 10  # epochs for step1
-    P.beta_2 = 150  # epochs for step2
-    P.epochs = 160  # epochs for step1+step2
-    P.lambda_ = 0.10
-    P.margin = 0.20
-    P.beta_1_overacc = 78
-else:
-    raise NotImplementedError()
+
 
 ### Initialize dataset ###
 train_set, infer_set, image_size, _ = get_dataset(P, dataset=P.dataset)
@@ -115,7 +108,7 @@ for epoch in range(start_epoch, P.epochs + 1):
           scheduler, train_loader, logger=logger)
 
     # overfit_check
-    if epoch == P.beta_1:
+    if epoch == P.epochs_beta_1:
         model.eval()
         rot_acc = test_classifier(P, model=model,  test_loader=infer_loader)
         logger.log('[rot_acc %.3f]' % (rot_acc))

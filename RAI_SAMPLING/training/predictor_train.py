@@ -9,19 +9,19 @@ from utils.utils import AverageMeter
 device = torch.device(f"cuda" if torch.cuda.is_available() else "cpu")
 hflip = TL.HorizontalFlipLayer().to(device)
 softmax = nn.Softmax(dim=1).to(device)
-margin_value = 0.20
 
 
-def entropy_margin(p, value=(math.log(4))/2, margin=margin_value, weight=None):
+
+def entropy_margin(p, value=(math.log(4))/2, margin=0.20, weight=None):
     p = softmax(p)
     return -torch.mean(hinge(torch.abs(-torch.sum(p * torch.log(p+1e-10), -1)
                                        - value), margin))
 
-def hinge(input, margin=margin_value):
+def hinge(input, margin=0.20):
     return torch.clamp(input, min=margin)
 
 
-def make_mask(p, value=(math.log(4))/2, margin=margin_value):
+def make_mask(p, value=(math.log(4))/2, margin=0.20):
     p = softmax(p)
     entropy_per_one = -torch.sum(p * torch.log(p+1e-10), -1)
     mask_tensor = torch.ones_like(entropy_per_one)
@@ -75,7 +75,7 @@ def train(P, epoch, model, criterion, optimizer, scheduler, loader, logger=None)
 
         outputs = model(images1)
     
-        if epoch <= P.beta_1:
+        if epoch <= P.epochs_beta_1:
             loss_crs = criterion(outputs, rot_labels)
             loss_en = torch.tensor(0)  # not use
             loss = loss_crs
@@ -85,7 +85,7 @@ def train(P, epoch, model, criterion, optimizer, scheduler, loader, logger=None)
             mask_tensor = make_mask(outputs)
             # ratio = make_mask_inv(outputs)
             loss_crs = mask_cross_entropy(outputs, rot_labels, mask_tensor)
-            loss = loss_crs + P.lambda_/P.beta_2 * (epoch-P.beta_1) * loss_en
+            loss = loss_crs + P.lambda_/P.epochs_beta_2 * (epoch-P.epochs_beta_1) * loss_en
 
         optimizer.zero_grad()
         loss.backward()
