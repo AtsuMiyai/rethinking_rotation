@@ -11,11 +11,11 @@ hflip = TL.HorizontalFlipLayer().to(device)
 softmax = nn.Softmax(dim=1).to(device)
 
 
-
 def entropy_margin(p, value=(math.log(4))/2, margin=0.20, weight=None):
     p = softmax(p)
     return -torch.mean(hinge(torch.abs(-torch.sum(p * torch.log(p+1e-10), -1)
                                        - value), margin))
+
 
 def hinge(input, margin=0.20):
     return torch.clamp(input, min=margin)
@@ -55,9 +55,9 @@ def train(P, epoch, model, criterion, optimizer, scheduler, loader, logger=None)
 
     check = time.time()
     model.train()
-    
+
     for n, (images, labels) in enumerate(loader):
-    
+
         count = n * P.n_gpus  # number of trained samples
 
         data_time.update(time.time() - check)
@@ -114,4 +114,3 @@ def train(P, epoch, model, criterion, optimizer, scheduler, loader, logger=None)
         logger.scalar_summary('train/loss_crs', losses['crs'].average, epoch)
         logger.scalar_summary('train/batch_time', batch_time.average, epoch)
         logger.scalar_summary('train/loss_en', losses['es'].average, epoch)
-

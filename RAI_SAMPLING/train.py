@@ -103,7 +103,7 @@ logger.log(model)
 
 for epoch in range(start_epoch, P.epochs + 1):
     logger.log_dirname(f"Epoch {epoch}")
-    
+
     train(P, epoch, model, criterion, optimizer,
           scheduler, train_loader, logger=logger)
 

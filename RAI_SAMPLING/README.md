@@ -3,6 +3,10 @@
     <img src=../figure/rai_sampling.png width="900"> 
 </p>
 
+## News
+- 2023.02: We have refactor the structure of the code for training.
+
+
 ## 1. Requirements
 
 ### Environments
